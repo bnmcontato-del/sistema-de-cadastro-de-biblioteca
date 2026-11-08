@@ -1,0 +1,470 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Ju3QyK1UZVD9"
+      },
+      "source": [
+        "# Módulo 07: Entrada e Saída de Dados (Arquivos) 💜\n",
+        "**Escola de Programação Web para Meninas**\n",
+        "\n",
+        "Nesta tarefa seu programa vai **conversar com arquivos**: ler informações que já existem, guardar informações novas e organizar tudo isso.\n",
+        "\n",
+        "**Antes de começar:**\n",
+        "1. Faça o upload dos arquivos `gastos.txt`, `convidados.txt` e `alunas.txt` no Colab (ícone de pasta 📁 na barra lateral → ícone de upload).\n",
+        "2. Escreva seu código nas células marcadas com `# SEU CÓDIGO AQUI`.\n",
+        "3. Rode cada célula (▶️) e confira se a saída bate com o exemplo.\n",
+        "\n",
+        "Se ficar com dúvida sobre o upload, veja o tutorial *Como utilizar o Google Colab*, na parte \"Fazendo upload de arquivos\"."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "MGTNbItTZVD-"
+      },
+      "source": [
+        "### Conferindo o upload\n",
+        "Rode a célula abaixo. Ela mostra os arquivos que estão no Colab agora. Você deve ver `gastos.txt`, `convidados.txt` e `alunas.txt`."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "y30IiBTMZVD-"
+      },
+      "execution_count": null,
+      "outputs": [],
+      "source": [
+        "import os\n",
+        "print(os.listdir(\".\"))"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "l0rWfnuYZVD_"
+      },
+      "source": [
+        "---\n",
+        "## 1. Lendo um arquivo — Controle de gastos ✦\n",
+        "\n",
+        "Use o arquivo `gastos.txt`, que tem **um valor por linha** (cada valor é um gasto).\n",
+        "\n",
+        "**Seu programa deve:** abrir e ler o arquivo e calcular a **média** dos gastos.\n",
+        "\n",
+        "**Exemplo de saída** (com os valores 150.00, 89.90, 32.50 e 200.00):\n",
+        "```\n",
+        "A média de gastos foi: R$ 118.10\n",
+        "```\n",
+        "\n",
+        "> 💡 **Dica:** para calcular uma média você precisa da **soma** de todos os valores e de **quantos valores** existem. Enquanto lê o arquivo linha por linha, pense: como você vai guardar a soma? E como vai saber quantos valores foram lidos?"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "with open(\"gastos.txt\", \"r\") as f:\n",
+        "  soma = 0\n",
+        "  quantidade = 0\n",
+        "  for linha in f:\n",
+        "    soma += float(linha)\n",
+        "    quantidade += 1\n",
+        "\n",
+        "média = soma / quantidade\n",
+        "print(f\"A média de gastos foi: R$ {média:.2f}\")\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "2e267a0e-019f-4581-9367-9a96b586e67c",
+        "id": "PCD8jw-dOfWB"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "A média de gastos foi: R$ 118.10\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from google.colab import drive\n",
+        "drive.mount('/content/drive')"
+      ],
+      "metadata": {
+        "id": "4V0j8gWMhWdL"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "GH0qjsrpZVD_"
+      },
+      "source": [
+        "---\n",
+        "## 2. Organizando um arquivo — Lista de convidados ✦\n",
+        "\n",
+        "Use o arquivo `convidados.txt`, com **um nome por linha**, fora de ordem.\n",
+        "\n",
+        "**Seu programa deve:** ler os nomes, colocá-los em **ordem alfabética** e **salvar** o resultado em um novo arquivo chamado `convidados_organizados.txt`.\n",
+        "\n",
+        "**Exemplo:**\n",
+        "\n",
+        "| convidados.txt | convidados_organizados.txt |\n",
+        "|---|---|\n",
+        "| Marcos | Ana |\n",
+        "| Ana | Beatriz |\n",
+        "| Julia | Julia |\n",
+        "| Beatriz | Marcos |\n",
+        "\n",
+        "> 💡 **Dica:** Python tem uma função pronta para ordenar listas — pesquise sobre `sorted()`. Depois de ordenar, pense: você vai escrever num arquivo que **ainda não existe**. Qual modo de abertura faz sentido para criar algo novo?"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "uozqr6IvZVD_"
+      },
+      "execution_count": null,
+      "outputs": [],
+      "source": [
+        "# SEU CÓDIGO AQUI\n",
+        "\n",
+        "nomes = []\n",
+        "with open(\"convidados.txt\", \"r\") as f:\n",
+        "  for linha in f:\n",
+        "    nomes.append(linha.strip())\n",
+        "    nomes_ordenados = sorted(nomes)\n",
+        "\n",
+        "with open(\"convidados_organizados.txt\", \"w\") as f:\n",
+        "  for nome in nomes_ordenados:\n",
+        "    f.write(nome + \"\\n\")"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "hmFStPfhZVD_"
+      },
+      "source": [
+        "**Conferindo o resultado:** rode a célula abaixo para ver o conteúdo do arquivo que você criou."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "OXX33WnxZVEA",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "4500d2bd-4e1f-4638-cb82-453d966cafdc"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Ana\n",
+            "Beatriz\n",
+            "Julia\n",
+            "Marcos\n",
+            "\n"
+          ]
+        }
+      ],
+      "source": [
+        "with open(\"convidados_organizados.txt\", \"r\") as f:\n",
+        "    print(f.read())"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "owVpYvqXZVEA"
+      },
+      "source": [
+        "---\n",
+        "## 3. Criando e editando um arquivo — Lista de compras do mercado ✦\n",
+        "\n",
+        "### Parte 1 — Criando a lista\n",
+        "Seu programa deve perguntar, **um item de cada vez**, o que a pessoa quer colocar na lista de compras, até que ela digite `\"sair\"`. Cada item digitado deve ser salvo em um arquivo chamado `lista_compras.txt`.\n",
+        "\n",
+        "Ao final, o programa deve **reabrir** o arquivo e mostrar a lista completa na tela.\n",
+        "\n",
+        "**Exemplo:**\n",
+        "```\n",
+        "Digite um item (ou \"sair\" para terminar): arroz\n",
+        "Digite um item (ou \"sair\" para terminar): feijão\n",
+        "Digite um item (ou \"sair\" para terminar): sabonete\n",
+        "Digite um item (ou \"sair\" para terminar): sair\n",
+        "\n",
+        "Sua lista de compras:\n",
+        "- arroz\n",
+        "- feijão\n",
+        "- sabonete\n",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "DgVYjiRMZVEA",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "c6b3de2c-e080-4f40-a030-5e352048625b"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Digite um item (ou 'sair' para terminar): Água\n",
+            "Digite um item (ou 'sair' para terminar): Papel Higiênico\n",
+            "Digite um item (ou 'sair' para terminar): Sabonete líquido\n",
+            "Digite um item (ou 'sair' para terminar): sair\n"
+          ]
+        }
+      ],
+      "source": [
+        "# SEU CÓDIGO AQUI (Parte 1)\n",
+        "\n",
+        "with open(\"lista_compras.txt\", \"w\") as f:\n",
+        "  while True:\n",
+        "    item = input(\"Digite um item (ou 'sair' para terminar): \")\n",
+        "    if item == \"sair\":\n",
+        "      break\n",
+        "    f.write(item + \"\\n\")"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "4SjUD7PYZVEA"
+      },
+      "source": [
+        "### Parte 2 — Editando a lista\n",
+        "Depois de criada, é comum lembrar de mais alguma coisa! Faça uma segunda parte do programa que **reabre** o `lista_compras.txt` (**sem apagar** o que já tem) e permite adicionar novos itens.\n",
+        "\n",
+        "**Exemplo:**\n",
+        "```\n",
+        "Sua lista de compras:\n",
+        "- arroz\n",
+        "- feijão\n",
+        "- sabonete\n",
+        "\n",
+        "Deseja adicionar mais itens? (sim/não): sim\n",
+        "Digite um item (ou \"sair\" para terminar): leite\n",
+        "Digite um item (ou \"sair\" para terminar): sair\n",
+        "\n",
+        "Sua lista de compras:\n",
+        "- arroz\n",
+        "- feijão\n",
+        "- sabonete\n",
+        "- leite\n",
+        "```\n",
+        "\n",
+        "> 💡 **Dica:** existem modos de abrir arquivo que criam do zero (e apagam o que já existia) e modos que adicionam sem apagar nada. Pesquise a diferença entre `'w'` e `'a'`. Qual faz sentido na primeira parte? E na segunda?"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "ipC4l-jVZVEA",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "19b38c10-071c-4eea-a58f-f306d1f0e509"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Sua lista de compras:\n",
+            "- Água\n",
+            "- Papel Higiênico\n",
+            "- Sabonete líquido\n",
+            "Deseja adicionar mais itens: (sim - não): sim\n",
+            "Digite um item (ou 'sair' para terminar): Café\n",
+            "Digite um item (ou 'sair' para terminar): sair\n"
+          ]
+        }
+      ],
+      "source": [
+        "# SEU CÓDIGO AQUI (Parte 2)\n",
+        "\n",
+        "print(\"Sua lista de compras:\")\n",
+        "with open(\"lista_compras.txt\", \"r\") as f:\n",
+        "  for linha in f:\n",
+        "    print(f\"- {linha.strip()}\")\n",
+        "\n",
+        "resposta = input(\"Deseja adicionar mais itens: (sim - não): \")\n",
+        "if resposta == \"sim\":\n",
+        "  with open(\"lista_compras.txt\", \"a\") as f:\n",
+        "    while True:\n",
+        "      item = input(\"Digite um item (ou 'sair' para terminar): \")\n",
+        "      if item == \"sair\":\n",
+        "        break\n",
+        "      f.write(item + \"\\n\")"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "oGFEeXE7ZVEA"
+      },
+      "source": [
+        "---\n",
+        "## 4. Juntando tudo — Relatório de alunas aprovadas ✦\n",
+        "\n",
+        "Use o arquivo `alunas.txt`, no formato `nome,nota` (uma aluna por linha).\n",
+        "\n",
+        "**Seu programa deve:**\n",
+        "- Ler os dados do arquivo\n",
+        "- Calcular quais alunas foram **aprovadas** (nota igual ou maior que 6) e quais foram **reprovadas**\n",
+        "- Salvar um relatório em um novo arquivo chamado `resultado.txt`\n",
+        "\n",
+        "**Exemplo** (com Ana,7.5 / Bruna,4.0 / Carla,8.2 / Diana,5.5), o `resultado.txt` deve ficar assim:\n",
+        "```\n",
+        "Aprovadas: 2\n",
+        "- Ana (7.5)\n",
+        "- Carla (8.2)\n",
+        "\n",
+        "Reprovadas: 2\n",
+        "- Bruna (4.0)\n",
+        "- Diana (5.5)\n",
+        "```\n",
+        "\n",
+        "> 💡 **Dica:** cada linha tem duas informações juntas (nome e nota), separadas por vírgula. Como você poderia separar essas duas partes depois de ler a linha? E, com a nota separada, como decidir se é aprovada ou reprovada?"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "xO-lmTUaZVEA",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "b75aa38d-fc93-455e-8275-edd9b7bb817f"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Relatório gerado com sucesso!\n"
+          ]
+        }
+      ],
+      "source": [
+        "# SEU CÓDIGO AQUI\n",
+        "\n",
+        "aprovadas = []\n",
+        "reprovadas = []\n",
+        "\n",
+        "with open(\"alunas.txt\", \"r\") as f:\n",
+        "  for linha in f:\n",
+        "    nome, nota = linha.strip().split(\",\")\n",
+        "    nota = float(nota)\n",
+        "    if nota >= 6:\n",
+        "      aprovadas.append((nome, nota))\n",
+        "    else:\n",
+        "      reprovadas.append((nome, nota))\n",
+        "\n",
+        "with open(\"resultado.txt\", \"w\") as f:\n",
+        "  f.write(f\"Aprovadas: {len(aprovadas)}\\n\")\n",
+        "  for nome, nota in aprovadas:\n",
+        "     f.write(f\"- {nome} ({nota})\\n\")\n",
+        "\n",
+        "  f.write(f\"Reprovadas: {len(reprovadas)}\\n\")\n",
+        "  for nome, nota in reprovadas:\n",
+        "      f.write(f\"- {nome} ({nota})\\n\")\n",
+        "\n",
+        "print(\"Relatório gerado com sucesso!\")\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "jxQsVUkgZVEA"
+      },
+      "source": [
+        "**Conferindo o resultado:** rode a célula abaixo para ver o conteúdo do `resultado.txt`."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "ed8CWxleZVEA",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "afe66abf-b579-426a-fa0a-cc2550817127"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Aprovadas: 2\n",
+            "- Ana (7.5)\n",
+            "- Carla (8.2)\n",
+            "Reprovadas: 2\n",
+            "- Bruna (4.0)\n",
+            "- Diana (5.5)\n",
+            "\n"
+          ]
+        }
+      ],
+      "source": [
+        "with open(\"resultado.txt\", \"r\") as f:\n",
+        "    print(f.read())"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "3Zb0aUFNZVEB"
+      },
+      "source": [
+        "---\n",
+        "## ✅ Antes de entregar\n",
+        "- [ ] Os 4 exercícios rodam sem erro\n",
+        "- [ ] As saídas aparecem nas células (rode tudo de novo: *Ambiente de execução → Executar tudo*)\n",
+        "- [ ] Os arquivos `convidados_organizados.txt`, `lista_compras.txt` e `resultado.txt` foram criados\n",
+        "\n",
+        "Bom trabalho! 🚀"
+      ]
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
